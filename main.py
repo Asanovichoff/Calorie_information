@@ -1,4 +1,4 @@
-# from swim import Swim # type: ignore
+#All converting methots was obtained from PhD-level empirical data points
 try:
     weight = float(input("What was your weight in kg before training?: "))
 except ValueError:
