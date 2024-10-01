@@ -1,6 +1,9 @@
+import csv
+from datetime import datetime
 class TrainingSession:
     def __init__(self, weight):
         self.weight = weight
+        self.csv = 'session_data.csv'
 
     def get_activity(self):
         while True:
@@ -31,3 +34,34 @@ class TrainingSession:
 
     def display_calories(self, activity, calories_burned):
         print(f"You burned: {calories_burned:.2f} calories doing {activity.capitalize()}")
+        
+    def log_session_to_csv(self, activity, distance, calories_burned):
+        fieldnames = ['date', 'activity', 'distance', 'calories_burned']
+
+        # Get the current date and time
+        current_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+
+        # Data to be written to the CSV
+        session_data = {
+            'date': current_time,
+            'activity': activity,
+            'distance': distance,
+            'calories_burned': f"{calories_burned:.2f}"
+        }
+
+        # Write to CSV
+        try:
+            with open(self.csv, mode='a', newline='') as file:
+                writer = csv.DictWriter(file, fieldnames=fieldnames)
+
+                # Write header only if the file is new
+                if file.tell() == 0:
+                    writer.writeheader()
+
+                # Write the session data
+                writer.writerow(session_data)
+
+            print(f"Session logged successfully to {self.csv}!")
+
+        except Exception as e:
+            print(f"Error logging session: {e}")    

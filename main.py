@@ -12,6 +12,7 @@ def main():
     calories_burned = session.calculate_calories(activity, distance)
 
     session.display_calories(activity, calories_burned)
+    session.log_session_to_csv(activity, distance, calories_burned)
 
 if __name__ == "__main__":
     main()
